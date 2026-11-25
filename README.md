@@ -10,7 +10,9 @@ This is an [Expo](https://expo.dev) project created with [`create-expo-app`](htt
    npm install
    ```
 
-2. Start the app
+2. Configure Supabase: `cp .env.example .env.local` and fill it in. Dashboard steps in [`docs/setup-supabase.md`](docs/setup-supabase.md).
+
+3. Start the app
 
    ```bash
    npx expo start
