@@ -75,9 +75,9 @@ npx supabase login
 npx supabase link --project-ref <project-ref>   # el subdominio de EXPO_PUBLIC_SUPABASE_URL
 ```
 
-Después de mergear una migración a `main`:
+Después de mergear una migración a `main` (la CLI apunta a la base local por defecto; `--remote` usa el proyecto vinculado):
 
 ```bash
-npx supabase db push --dry-run   # muestra qué migraciones va a aplicar
-npx supabase db push
+npx supabase db push --remote --dry-run   # muestra qué migraciones va a aplicar
+npx supabase db push --remote
 ```
