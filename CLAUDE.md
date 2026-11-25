@@ -16,7 +16,7 @@ Estas no se negocian. Si una tarea parece requerir romperlas, parar y preguntar.
 1. **Plata en enteros, nunca `float`.** Todos los montos se guardan y transportan como enteros en la unidad mínima (centavos para ARS, cents para USD). Mostrar con formato solo en la capa de UI.
 2. **Moneda por cuenta.** Cada `account` tiene su moneda (`ARS` | `USD`). Nunca mezclar monedas sin pasar por conversión explícita con cotización fechada.
 3. **Doble partida.** Todo movimiento se expresa como `transaction` + N `entries` que suman cero. Una transferencia MP → banco es un movimiento entre cuentas, no un gasto. Ningún `INSERT` directo a `entries` sin pasar por el servicio de transacciones.
-4. **La IA propone, el usuario confirma.** Cualquier registro generado por el asistente (texto/voz/email) entra como *pendiente* y solo se persiste al libro cuando el usuario confirma la tarjeta. La IA nunca inventa números: los obtiene con *tool calling* contra la base.
+4. **La IA propone, el usuario confirma.** Cualquier registro generado por el asistente (texto/voz/email) entra como _pendiente_ y solo se persiste al libro cuando el usuario confirma la tarjeta. La IA nunca inventa números: los obtiene con _tool calling_ contra la base.
 5. **Validar todo lo que cruza un borde con Zod.** Formularios, respuestas de IA, payloads de Edge Functions, parsers de CSV/PDF/email. Si no está validado, no entra al dominio.
 6. **RLS en todas las tablas.** Toda tabla nueva nace con política de Row Level Security que aísla por `user_id`. Las migraciones que crean tablas sin RLS no se mergean.
 7. **Secretos fuera del repo y fuera del cliente.** Claves de IA, tokens de Gmail, credenciales de servicios: solo en variables de entorno del servidor (Supabase Edge Functions). El bundle del cliente nunca las ve.
@@ -83,7 +83,7 @@ Reglas:
 
 ## Asistente (barra de texto/voz)
 
-- Herramientas (*tool calling*): `registrar_movimiento`, `consultar_movimientos`, `resumen_por_categoria`, `saldo_de_cuentas`. Las consultas pasan por SQL real; la IA solo interpreta y redacta.
+- Herramientas (_tool calling_): `registrar_movimiento`, `consultar_movimientos`, `resumen_por_categoria`, `saldo_de_cuentas`. Las consultas pasan por SQL real; la IA solo interpreta y redacta.
 - Voz: grabar con `expo-audio`, transcribir en el servidor (Whisper o similar), seguir el mismo flujo que el texto.
 - Mascota: estados con Rive (feliz, pensando, festejando, preocupada). Los estados se derivan del contexto, no los decide la IA libremente.
 - Toda respuesta de IA pasa por un schema Zod antes de alimentar la UI.
@@ -93,7 +93,7 @@ Reglas:
 - Una rama y un PR por funcionalidad. PRs chicos y revisables.
 - **Conventional commits** (`feat:`, `fix:`, `chore:`, `docs:`, `refactor:`, `test:`).
 - CI corre `lint`, `tsc --noEmit` y `jest` en cada PR. No se mergea en rojo.
-- Decisiones arquitectónicas relevantes → ADR corto en `docs/decisiones/NNNN-titulo.md` *antes* de implementar.
+- Decisiones arquitectónicas relevantes → ADR corto en `docs/decisiones/NNNN-titulo.md` _antes_ de implementar.
 
 ## Comandos
 
@@ -111,7 +111,7 @@ Correr `lint` + `typecheck` + `jest` antes de declarar una tarea terminada.
 
 - Preferir módulos de Expo recomendados antes que librerías de terceros. Verificar en los docs de la versión actual.
 - No introducir abstracciones "por si acaso". El spec es la lista de features; no inventar scope.
-- Si una tarea toca dinero, confirmación de IA, RLS o conectores: releer las *reglas inviolables* antes de proponer el cambio.
+- Si una tarea toca dinero, confirmación de IA, RLS o conectores: releer las _reglas inviolables_ antes de proponer el cambio.
 - Al tocar una tabla o un flujo de dominio, actualizar los tests del dominio en la misma PR.
 
 ## Etapa actual
