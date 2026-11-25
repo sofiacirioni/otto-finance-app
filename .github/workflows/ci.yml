@@ -26,3 +26,27 @@ jobs:
 
       - name: Test
         run: npm test -- --ci
+
+  database:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - run: npm ci
+
+      # Solo Postgres: aplica las migraciones de supabase/migrations.
+      - name: Start database
+        run: npx supabase db start
+
+      - name: Database tests (pgTAP)
+        run: npm run db:test
+
+      - name: Generated types are up to date
+        run: |
+          npm run db:types
+          git diff --exit-code -- src/lib/database.types.ts

@@ -12,6 +12,10 @@
     "typecheck": "tsc --noEmit",
     "test": "jest",
     "format": "prettier --write .",
+    "db:start": "supabase start",
+    "db:reset": "supabase db reset",
+    "db:test": "supabase test db",
+    "db:types": "supabase gen types typescript --local --schema public > src/lib/database.types.ts && prettier --write src/lib/database.types.ts",
     "reset-project": "node ./scripts/reset-project.js"
   },
   "dependencies": {
@@ -53,6 +57,7 @@
     "jest": "~30.5.2",
     "jest-expo": "~58.0.15",
     "prettier": "^3.10.1",
+    "supabase": "^3.4.0",
     "typescript": "~6.0.3"
   },
   "jest": {
