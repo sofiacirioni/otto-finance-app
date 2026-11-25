@@ -52,3 +52,32 @@ Supabase no deja editar las plantillas de mail con el SMTP integrado. Usamos Res
 ## Verificación
 
 `npx expo start` → ingresar mail → llega el código → entrar → el home muestra el mail. Cerrar y reabrir la app mantiene la sesión.
+
+## Base de datos: desarrollo local y migraciones
+
+El esquema vive en `supabase/migrations/` (ver [ADR 0002](decisiones/0002-esquema-base-doble-partida.md)). La Supabase CLI está en las devDependencies y usa Docker.
+
+```bash
+npm run db:start   # levanta Supabase local (la primera vez descarga imágenes)
+npm run db:reset   # recrea la base local aplicando todas las migraciones
+npm run db:test    # tests pgTAP de supabase/tests/database
+npm run db:types   # regenera src/lib/database.types.ts (commitearlo)
+```
+
+Nueva migración: `npx supabase migration new <nombre>` → escribir el SQL → `db:reset` → `db:test` → `db:types`. El CI corre los tests de base y falla si los tipos no están regenerados.
+
+### Aplicar al proyecto remoto
+
+Una sola vez, vincular el repo al proyecto (pide la database password del paso 1):
+
+```bash
+npx supabase login
+npx supabase link --project-ref <project-ref>   # el subdominio de EXPO_PUBLIC_SUPABASE_URL
+```
+
+Después de mergear una migración a `main`:
+
+```bash
+npx supabase db push --dry-run   # muestra qué migraciones va a aplicar
+npx supabase db push
+```
